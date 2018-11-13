@@ -31,11 +31,11 @@ void read_field() {
 }
 
 bool valid_position(int i, int j) {
-    return (i >= 0 and i < n and j >= 0 and j < m and field[i][j] != 'X' and not enqueued[i][j]);
+    	return (i >= 0 and i < n and j >= 0 and j < m and field[i][j] != 'X' and not enqueued[i][j]);
 }
 
 int bfs() {
-    enqueued = Matrix_bool(field.size(), vector<bool>(m, false));
+	enqueued = Matrix_bool(field.size(), vector<bool>(m, false));
 	
 	position initial_pos;
 	initial_pos.r = r-1;
