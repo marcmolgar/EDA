@@ -44,7 +44,7 @@ int bfs() {
 
 	queue<position> q;
 	q.push(initial_pos);
-    enqueued[r-1][c-1] = true;
+	enqueued[r-1][c-1] = true;
 
 	while (not q.empty()) {
 		position current = q.front();
