@@ -32,7 +32,7 @@ bool valid_position(int i, int j) {
     	return (i >= 0 and i < n and j >= 0 and j < m and field[i][j] != 'X' and not stacked[i][j]);
 }
 
-bool bfs() {
+bool dfs() {
 	stacked = Matrix_bool(field.size(), vector<bool>(m, false));
 	
 	position initial_pos;
@@ -70,7 +70,7 @@ int main() {
 	field = Matrix(n, vector<char>(m));
 	read_field();
 	cin >> r >> c;
-	bool found = bfs();
+	bool found = dfs();
 	if (found) cout << "yes" << endl;
 	else cout << "no" << endl;
 }
