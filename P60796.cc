@@ -23,11 +23,9 @@ int mov_x[] = { 1, -1, 0, 0 };
 int mov_y[] = { 0, 0, 1, -1 };
 
 void read_field() {
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < m; j++) {
+	for (int i = 0; i < n; i++)
+		for (int j = 0; j < m; j++)
 			cin >> field[i][j];
-		}
-	}
 }
 
 bool valid_position(int i, int j) {
@@ -50,19 +48,19 @@ int bfs() {
 		position current = q.front();
 		q.pop();
 
-        if (field[current.r][current.c] == 't')
-            return current.d;
-        
-        for (int i = 0; i < 4; i++) {
-            if (valid_position(current.r + mov_x[i], current.c + mov_y[i])) {
-                position adjacent;
-                adjacent.r = current.r + mov_x[i];
-                adjacent.c = current.c + mov_y[i];
-                adjacent.d = current.d + 1;
-                q.push(adjacent);
-                enqueued[adjacent.r][adjacent.c] = true;
-            }
-        }
+		if (field[current.r][current.c] == 't')
+		    return current.d;
+
+		for (int i = 0; i < 4; i++) {
+			if (valid_position(current.r + mov_x[i], current.c + mov_y[i])) {
+				position adjacent;
+				adjacent.r = current.r + mov_x[i];
+				adjacent.c = current.c + mov_y[i];
+				adjacent.d = current.d + 1;
+				q.push(adjacent);
+				enqueued[adjacent.r][adjacent.c] = true;
+			}
+		}
 	}
 	return 0;
 }
