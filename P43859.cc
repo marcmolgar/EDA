@@ -1,9 +1,10 @@
-/* P43859: Weighted shortest path (1) */
+/* P13994: Weighted shortest path (2) */
 
 #include <iostream>
 #include <vector>
-#include <limits>
 #include <queue>
+#include <stack>
+#include <limits> //to allow definition below
 
 #define INFINIT numeric_limits<int>::max()
 
@@ -18,7 +19,7 @@ void dijkstra(const graph &g, int x, vector<int> &d, vector<int> &p) {
   p = vector<int>(n, -1);
   vector<bool> s(n, false);
   priority_queue< arc, vector<arc>, greater<arc> > q;
-  q.push(arc(0,x));
+  q.push(arc(0, x));
   
   while (not q.empty()) {
     int u = q.top().second; //vertex we depart from
@@ -26,17 +27,13 @@ void dijkstra(const graph &g, int x, vector<int> &d, vector<int> &p) {
     if (not s[u]) {
       s[u] = true;
       for (int i = 0; i < g[u].size(); ++i) {
-		int v = g[u][i].second;  //vertex we go to
-		int c = g[u][i].first;   //cost of going to it
-		if (d[v] > d[u] + c) {
-		d[v] = d[u] + c;
-		p[v] = u;
-		q.push(arc(d[v],v));
-		}
-      }
-    }
-  }
-}
+        int v = g[u][i].second;  //vertex we go to
+        int c = g[u][i].first;   //cost of going to it
+        if (d[v] > d[u] + c) {
+          d[v] = d[u] + c;
+          p[v] = u;
+          q.push(arc(d[v],v));
+} } } } }
 
 int main() {
   int n, m, x, y;
@@ -50,13 +47,20 @@ int main() {
       g[k].push_back(a);
     }
     cin >> x >> y;
-    if (x == y) cout << 0 << endl;
+    vector<int> d;
+    vector<int> p;
+    dijkstra(g, x, d, p);
+    stack<int> s;
+    if (d[y] == INFINIT) cout << "no path from " << x << " to " << y << endl;
     else {
-      vector<int> d;
-      vector<int> p;
-      dijkstra(g, x, d, p);
-      if (p[y] == -1) cout << "no path from " << x << " to " << y << endl;
-      else cout << d[y] << endl;
-    }
-  }
-}
+      int aux = y;
+      while (aux != -1) {
+        s.push(aux);
+        aux = p[aux];
+      }
+      while (s.size() > 1) {
+        cout << s.top() << " ";
+        s.pop();
+      }
+      cout << s.top() << endl;
+} } }
