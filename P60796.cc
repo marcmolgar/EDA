@@ -10,30 +10,53 @@ typedef vector< vector<char> > Matrix;
 typedef vector< vector<bool> > Matrix_bool;
 
 struct position {
-	int r;
-	int c;
-	int d;
+	int r; // row
+	int c; // column
+	int d; // distance to this position from starting coordinates
 };
 
+/* 
+ * Statement variables
+ */
 int n, m, r, c;
 Matrix field;
-Matrix_bool enqueued;
+Matrix_bool queued;
 
-int mov_x[] = { 1, -1, 0, 0 };
-int mov_y[] = { 0, 0, 1, -1 };
+/*
+ * Auxiliar arrays used to loop through the 4 adjacent positions of a cell
+ */
+const int mov_x[] = { 1, -1, 0, 0 };
+const int mov_y[] = { 0, 0, 1, -1 };
 
+/*
+ * Reads a matrix of characters
+ */
 void read_field() {
 	for (int i = 0; i < n; i++)
 		for (int j = 0; j < m; j++)
 			cin >> field[i][j];
 }
 
+/*
+ * A position is considered valid iff it lies within the limits of the
+ * matrix, does not contain an 'X', and has not been queued yet
+ */
 bool valid_position(int i, int j) {
-    	return (i >= 0 and i < n and j >= 0 and j < m and field[i][j] != 'X' and not enqueued[i][j]);
+	return i >= 0
+	   and i < n
+	   and j >= 0
+	   and j < m
+	   and field[i][j] != 'X'
+	   and not queued[i][j];
 }
 
+/*
+ * Returns the distance to the nearest treasure starting from
+ * initial position. If no treasure can be reached, returns 0.
+ * Time complexity: Θ(n·m)
+ */
 int bfs() {
-	enqueued = Matrix_bool(field.size(), vector<bool>(m, false));
+	queued = Matrix_bool(field.size(), vector<bool>(m, false));
 	
 	position initial_pos;
 	initial_pos.r = r-1;
@@ -42,7 +65,7 @@ int bfs() {
 
 	queue<position> q;
 	q.push(initial_pos);
-	enqueued[r-1][c-1] = true;
+	queued[r-1][c-1] = true;
 
 	while (not q.empty()) {
 		position current = q.front();
@@ -51,14 +74,14 @@ int bfs() {
 		if (field[current.r][current.c] == 't')
 		    return current.d;
 
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 4; i++) { // loops through the 4 adjacent positions
 			if (valid_position(current.r + mov_x[i], current.c + mov_y[i])) {
 				position adjacent;
 				adjacent.r = current.r + mov_x[i];
 				adjacent.c = current.c + mov_y[i];
 				adjacent.d = current.d + 1;
 				q.push(adjacent);
-				enqueued[adjacent.r][adjacent.c] = true;
+				queued[adjacent.r][adjacent.c] = true;
 			}
 		}
 	}
