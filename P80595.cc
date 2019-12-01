@@ -16,7 +16,7 @@ void merge(vector<int>& v, int l, int m, int r, int &x) {
 		if (v[i] <= v[j]) b[k++] = v[i++];
 		else {
 			b[k++] = v[j++];
-			x += m+1-i;
+			x += m + 1 - i;
 		}
 	}
 	while (i <= m) b[k++] = v[i++];
