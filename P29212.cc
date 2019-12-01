@@ -2,6 +2,16 @@
 
 using namespace std;
 
+// Dummy and inefficient
+/* int powermod(int base, int exp, int mod) {
+	int result = 1;
+	for (int i = 0; i < exp; ++i) {
+		result *= base % mod;
+		result %= mod;
+	}
+	return result % mod;
+} */
+
 // Iterative
 /* int powermod(int base, int exp, int mod) {
 	int res = 1;
